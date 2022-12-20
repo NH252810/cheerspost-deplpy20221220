@@ -29,7 +29,7 @@ guinness_data = df[df["menu"].str.contains("ギネス")]
 # セレクトボックス
 bland_options = st.sidebar.selectbox(
     'ご希望のビール銘柄をお選びください。',
-    ['プレミアム', 'モルツ', 'アサヒ', 'ヱビス', 'キリン',  'ヒューガルデン', 'コロナ', 'ギネス' ,'全店舗'])
+    ['プレミアム', 'モルツ', 'アサヒ', 'ヱビス', 'キリン',  'ヒューガルデン', 'コロナ', 'ギネス' ,'全銘柄'])
 
 st.sidebar.write('現在の選択:', bland_options)
 
@@ -57,7 +57,7 @@ corona_data2 = corona_data[corona_data["price"] <= price_slider]
 guinness_data2 = guinness_data[guinness_data["price"] <= price_slider]
 
 
-# 全店舗（all_map)：地図の中心の緯度/経度、タイル、初期のズームサイズを指定
+# 全銘柄（all_map)：地図の中心の緯度/経度、タイル、初期のズームサイズを指定
 all_map = folium.Map(
     # 地図の中心位置の指定(今回は大梅田駅を指定)
     location = [34.7055051, 135.4983028], 
@@ -68,10 +68,10 @@ all_map = folium.Map(
     zoom_start = 15
 )
 
-#全店舗の層を作成
-all_group = FeatureGroup(name="全店舗")
+#全銘柄の層を作成
+all_group = FeatureGroup(name="全銘柄")
 
-# darkblueのマーカーを全店舗の座標に差し、グループに追加
+# darkblueのマーカーを全銘柄の座標に差し、グループに追加
 for i, row in all_data2.iterrows():
     folium.Marker(
         location=[row['lat'], row['lng']],
@@ -283,7 +283,7 @@ guinness_mean_price = int(guinness_data["price"].mean())
 
 
 
-if bland_options == '全店舗':
+if bland_options == '全銘柄':
     st.write('ビールが飲めるお店')
     st_folium(all_map, width=700, height=700)
     st.sidebar.write('大阪市北区のビール1杯の最安値は、', all_min_price,'円です')
